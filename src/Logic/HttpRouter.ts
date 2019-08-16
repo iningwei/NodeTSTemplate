@@ -1,10 +1,10 @@
-import { ServerResponse } from "http";
+import { ServerResponse, IncomingMessage } from "http";
 
 export class HttpRouter {
 
-    public Route(handle: any, pathName: string, response: ServerResponse) {
+    public Route(handle: any, pathName: string, request: IncomingMessage, response: ServerResponse) {
         if (typeof handle[pathName] === "function") {
-            handle[pathName](response);
+            handle[pathName](request, response);
         }
         else {
             console.log("no rquest handler found for " + pathName);

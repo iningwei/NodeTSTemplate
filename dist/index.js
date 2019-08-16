@@ -25,10 +25,17 @@ function Start(route, handle) {
     HTTPServer_1.HTTPServer.Instance.Start(function (request, response) {
         var pathName = url.parse(request.url).pathname;
         console.log("request for " + pathName + " received.");
-        // response.writeHead(200, { "Content-Type": "text/plain" });
-        route(handle, pathName, response);
-        // response.write(content);
-        // response.end();
+        // let postData = "";
+        // request.setEncoding("utf8");
+        // request.addListener("data", function (postDataChunk) {
+        // 	postData += postDataChunk;
+        // 	console.log("received Post data chunk '" + postDataChunk + "'");
+        // 	console.log("total postData:" + postData);
+        // });
+        // request.addListener("end", function () {
+        // route(handle, pathName, response, postData);
+        // });
+        route(handle, pathName, request, response);
     }, 3888);
 }
 var httpRouter = new HttpRouter_1.HttpRouter();
@@ -36,7 +43,9 @@ var requestHandler = new RequestHandler_1.RequestHandler();
 var handle = {};
 handle["/"] = requestHandler.start;
 handle["/start"] = requestHandler.start;
-handle["/upload"] = requestHandler.upload;
+handle["/uploadTxt"] = requestHandler.uploadTxt;
+handle["/uploadPic"] = requestHandler.uploadPic;
+handle["/showPic"] = requestHandler.showPic;
 Start(httpRouter.Route, handle);
 // const server =http.createServer(function(request, response) {
 // 	response.writeHead(200, {"Content-Type": "text/plain"});

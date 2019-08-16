@@ -11,5 +11,9 @@
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^12.7.1"
+  },
+  "dependencies": {
+    "@types/formidable": "^1.0.31",
+    "formidable": "^1.2.1"
   }
 }

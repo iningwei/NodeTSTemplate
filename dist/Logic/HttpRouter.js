@@ -3,9 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var HttpRouter = /** @class */ (function () {
     function HttpRouter() {
     }
-    HttpRouter.prototype.Route = function (handle, pathName, response) {
+    HttpRouter.prototype.Route = function (handle, pathName, request, response) {
         if (typeof handle[pathName] === "function") {
-            handle[pathName](response);
+            handle[pathName](request, response);
         }
         else {
             console.log("no rquest handler found for " + pathName);

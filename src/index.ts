@@ -2,10 +2,7 @@ import { HTTPServer } from "./Server/HTTPServer/HTTPServer";
 import * as url from "url";
 import { HttpRouter } from "./Logic/HttpRouter";
 import { RequestHandler } from "./Logic/RequestHandler";
-
-
-// let http=require('http');
-
+ 
 // const server = http.createServer(function (request: http.IncomingMessage, response: http.ServerResponse): void {
 // 	console.log("request received!");
 // 	response.writeHead(200, { "Content-Type": "text/plain" });
@@ -19,17 +16,15 @@ import { RequestHandler } from "./Logic/RequestHandler";
 
 
 
-function Start(route: (handle, name,response) => void, handle: any) {
+
+function Start(route: (handle, name, response, postData) => void, handle: any, port: number) {
 	console.log("start!!");
 
 	HTTPServer.Instance.Start((request, response) => {
 		var pathName = url.parse(request.url).pathname;
 		console.log("request for " + pathName + " received.");
-		// response.writeHead(200, { "Content-Type": "text/plain" });
-	    route(handle, pathName,response);
-		// response.write(content);
-		// response.end();
-	}, 3888);
+		route(handle, pathName, request, response);
+	}, port);
 }
 
 let httpRouter: HttpRouter = new HttpRouter();
@@ -37,12 +32,8 @@ let requestHandler: RequestHandler = new RequestHandler();
 let handle = {};
 handle["/"] = requestHandler.start;
 handle["/start"] = requestHandler.start;
-handle["/upload"] = requestHandler.upload;
+handle["/uploadTxt"] = requestHandler.uploadTxt;
+handle["/uploadPic"] = requestHandler.uploadPic;
+handle["/showPic"] = requestHandler.showPic;
 
-Start(httpRouter.Route, handle);
-
-// const server =http.createServer(function(request, response) {
-// 	response.writeHead(200, {"Content-Type": "text/plain"});
-// 	response.write("Hello World");
-// 	response.end();
-//   }).listen(3888);
+Start(httpRouter.Route, handle, 3888);
