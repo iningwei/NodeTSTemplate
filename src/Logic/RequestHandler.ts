@@ -67,7 +67,6 @@ export class RequestHandler {
         form.uploadDir = "./tmp";//必须设置保存地址，否则无法保存
         form.keepExtensions = true;//上传的文件默认会变成一个随机命名的不带扩展名的文件，故需要设置保持扩展名
         form.parse(request, function (error, fields, files) {
-
             fs.renameSync(files.upload.path, "tmp/test.png");
             response.writeHead(200, { "Content-Type": "text/html" });
             response.write("received image:<br/>");
